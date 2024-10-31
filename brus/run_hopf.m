@@ -45,9 +45,9 @@ xhopf=[A; B/A; A; B/A; A; B/A; A; B/A];
     {'A', 'B',   'lambda'},...
      [A;   B; 1000*delta/44]);
 %%
-cycles={[1,2,4,3],4};
+%cycles={[1,2,4,3],4};
 %cycles={[2,1],2; [3,4],1};
-%cycles={[2,3,4],1};
+cycles={[2,3,4],1};
 prob=hopf_equiv_hb('',funcs,xhopf,pnames,phopf,omega,n_osc,cycles);
 [data,uidx]=coco_get_func_data(prob,'ep.HB','data','uidx');
 prob = coco_add_pars(prob, 'kmon', uidx(data.pr.ep_hb.k_idx), 'k');

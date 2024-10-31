@@ -5,7 +5,7 @@ if om<1e-9 % if neutral saddle
   return
 end
 A  = data.dfdxhan(x,p);
-vc = v-1i*A*v/om;
+vc = om*v-1i*A*v;
 S=data.gamma-diag(exp(1i*2*pi./data.tau));
 yc=S*vc;
 y=[real(yc);imag(yc)];
