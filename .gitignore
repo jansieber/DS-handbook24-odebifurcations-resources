@@ -1,0 +1,13 @@
+*~
+*.mat
+*.log
+*.pdf
+*.eps
+*.aux
+*.toc
+*.out
+*.asv
+*.synctex.*
+**/html/*.png
+**/data/
+**/.DS_Store
