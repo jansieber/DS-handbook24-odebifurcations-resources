@@ -1,7 +1,7 @@
 # DS-handbook24-odebifurcations-resources
 This repository contains computational scripts to reproduce the data for figures in
 
-Harry Dankowicz \& Jan Sieber: Computational Bifurcation Analysis. Chapter in: Handbook on Nonlinear Dynamics. Volume 2 Numerical Methods. Edited by Vincent Acary.
+Harry Dankowicz \& Jan Sieber: Computational Bifurcation Analysis. Chapter in: Handbook on Nonlinear Dynamics. Volume 2 Numerical Methods. Edited by Vincent Acary and Oleg Gendelman.
 
 ## Folders:
 * `coco_r3316`: snapshot of coco used for the runs. For newest stable version: (https://sourceforge.net/projects/cocotools/)
