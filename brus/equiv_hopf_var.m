@@ -1,4 +1,4 @@
-function [re, im,sol,data] = equiv_hopf_var(prob,oid,omega,n_osc,cycles)
+function [re, im,sol,data,pmat,irot] = equiv_hopf_var(prob,oid,omega,n_osc,cycles)
 id=coco_get_id(oid,'ep');
 [data,u0,t0]=coco_get_func_data(prob,id,'data','u0','t0');
 xhopf=u0(data.pr.ep_eqn.x_idx);

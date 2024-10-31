@@ -45,14 +45,12 @@ xhopf=[A; B/A; A; B/A; A; B/A; A; B/A];
     {'A', 'B',   'lambda'},...
      [A;   B; 1000*delta/44]);
 %%
-irot=4;
-cycles={[1,2,4,3],irot};
+cycles={[1,2,4,3],4};
+%cycles={[2,1],2; [3,4],1};
+%cycles={[2,3,4],1};
 prob=hopf_equiv_hb('',funcs,xhopf,pnames,phopf,omega,n_osc,cycles);
 [data,uidx]=coco_get_func_data(prob,'ep.HB','data','uidx');
 prob = coco_add_pars(prob, 'kmon', uidx(data.pr.ep_hb.k_idx), 'k');
-pmat=cycle2perm([n_osc,basedim],cycles);
-prob=ep_HB_add_func(prob,'','sym',@v_symmetry,struct('gamma',pmat,'tau',irot,'dfdxhan',funcs{2}),'inactive',...
-    arrayfun(@(i){sprintf('sym%02d',i)},1:2*alldim));
 prob = coco_set(prob, 'cont', 'PtMX', [20 30], 'NPR', 100,'norm', inf);
 coco(prob, 'runHB', [], 1, {'lambda','B','k'}, [15 30]);
 
