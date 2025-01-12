@@ -27,9 +27,10 @@ hbsel=hb1.("ep.test.BTP")>-1e-3;
 hb2=coco_bd_table('hb_run2');
 dh1=coco_bd_table('dh_run1');
 dh2=coco_bd_table('dh_run2');
-F=scatteredInterpolant(hb2.x,hb2.beta,[hb2.sigma,hb2.delta],'linear','none');
+Fsigma=scatteredInterpolant(hb2.x,hb2.beta,hb2.sigma,'linear','none');
+Fdelta=scatteredInterpolant(hb2.x,hb2.beta,hb2.delta,'linear','none');
 [xm,bm]=meshgrid(0.2:0.001:0.9,0:0.0001:0.06);
-sd=reshape(F(xm,bm),[size(xm),2]);
+sd=cat(3,Fsigma(xm,bm),Fdelta(xm,bm));
 % periodic orbits
 pf=coco_bd_table('po_sn_run'); %pofold
 pf=pf(find(strcmp(pf.TYPE,'FP')):-1:1,:); % po DH
