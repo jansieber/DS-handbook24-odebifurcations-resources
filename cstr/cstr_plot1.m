@@ -147,18 +147,27 @@ xlabel(ax8,'$\sigma$',ltx{:},'FontSize',24);
 ylabel(ax8,'$x$',ltx{:},'FontSize',24);
 zlabel(ax8,'$\beta$','Rotation',0,ltx{:},'FontSize',24);
 %
-%%
-is_old=loc_isold()
-%%
 nexttile(2);ax9=gca;
 colormap('default');
 hold(ax9,'off');
-dhpl=plot(ax9,dh1.sigma,dh1.beta,'color','r',lw{:},'DisplayName','degen. Hopf');
-hold(ax9,'on');
-[cs,hs]=contourf(ax9,sd(:,:,1),bm,sd(:,:,2),[0.08,0.12,0:0.05:0.3],'ShowText','on',...
-    'EdgeColor','k','FaceAlpha',0.3,'EdgeAlpha',0.8,'LineWidth',2);
+is_old=loc_isold();
+alpha_val=[0.3,0.8];
+if is_old
+    clr_dh={[0.8,0.2,0.2],[1,0,0]};
+    surf(ax9,sd(:,:,1),bm,xm,sd(:,:,2),...
+        'EdgeColor','none','LineWidth',2,'FaceAlpha',alpha_val(1));
+    view(ax9,0,90);
+    hold(ax9,'on');
+    [cs,hs]=contour(ax9,sd(:,:,1),bm,sd(:,:,2),[0.08,0.12,0:0.05:0.3],'ShowText','on',...
+        'EdgeColor','k','LineWidth',2);
+else
+    clr_dh={[1,0,0],[1,0,0]};
+    [cs,hs]=contour(ax9,sd(:,:,1),bm,sd(:,:,2),[0.08,0.12,0:0.05:0.3],'ShowText','on',...
+        'EdgeColor','k','LineWidth',2,'FaceAlpha',alpha_val(1),'EdgeAlpha',alpha_val(2));
+end
 clabel(cs,hs, 'FontSize', 15, 'FontWeight','bold','FontName','Courier');
-plot(ax9,dh2.sigma,dh2.beta,'color','r',lw{:});
+plot(ax9,dh1.sigma,dh1.beta,'color',clr_dh{1},lw{:});
+dhpl=plot(ax9,dh2.sigma,dh2.beta,'color',clr_dh{2},lw{:},'DisplayName','degen. Hopf');
 cbs=colorbar(ax9);
 cbs.Title.String='$\delta$';
 cbs.Title.Interpreter='latex';
@@ -380,7 +389,9 @@ plot3(axhb,hb1{:,'sigma'},hb1{:,'delta'},0*hb1{:,'delta'},'r',lw{:},'DisplayName
 idh=find(strcmp(hb1.TYPE,'DH'));
 plot3(axhb,hb1{idh,'sigma'},hb1{idh,'delta'},0*hb1{idh,'delta'},mspec.dh{:});
 ipfdh=find(strcmp(pf.TYPE,'FP'));
-plot3(axhb,pf{1:ipfdh,'sigma'},pf{1:ipfdh,'delta'},pf{1:ipfdh,'amplitude'},':',...
+ipfTlow=find(pf.('po.period')>3,1,'first');
+ipfrg=min(ipfdh,ipfTlow):max(ipfdh,ipfTlow);
+plot3(axhb,pf{ipfrg,'sigma'},pf{ipfrg,'delta'},pf{ipfrg,'amplitude'},':',...
     'color',clr(7,:),'LineWidth',6,'DisplayName','Saddle-node of periodic orbit');
 grid(axhb,'on');
 view(axhb,[-12,70]);
