@@ -147,6 +147,9 @@ xlabel(ax8,'$\sigma$',ltx{:},'FontSize',24);
 ylabel(ax8,'$x$',ltx{:},'FontSize',24);
 zlabel(ax8,'$\beta$','Rotation',0,ltx{:},'FontSize',24);
 %
+%%
+is_old=loc_isold()
+%%
 nexttile(2);ax9=gca;
 colormap('default');
 hold(ax9,'off');
@@ -421,4 +424,12 @@ if ~doplot
     return
 end
 feval(exportfun,varargin{:});
+end
+%%
+function isold=loc_isold()
+v=version;
+Rloc=strfind(v,'R');
+year=str2double(v(Rloc+(1:4)));
+rel=v(Rloc+5);
+isold=year<2022 || (year==2022 && rel=='b');
 end
