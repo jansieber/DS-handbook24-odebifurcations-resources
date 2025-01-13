@@ -148,6 +148,7 @@ ylabel(ax8,'$x$',ltx{:},'FontSize',24);
 zlabel(ax8,'$\beta$','Rotation',0,ltx{:},'FontSize',24);
 %
 nexttile(2);ax9=gca;
+colormap('default');
 hold(ax9,'off');
 dhpl=plot(ax9,dh1.sigma,dh1.beta,'color','r',lw{:},'DisplayName','degen. Hopf');
 hold(ax9,'on');
