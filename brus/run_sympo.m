@@ -77,8 +77,8 @@ legend(ax2,tprofs,txt{:},ltx{:});
 %% run2, branching off from (second) UST1 point near lambda=17 into 2x2 symmetry
 UST1=coco_bd_labs('run1','UST');
 prob = coco_prob;
-prob = ode_BP2po(prob, '', 'run1', UST1(2));
-prob = coco_set(prob, 'cont', 'branch', true);
+prob = ode_po2po(prob, '', 'run1', UST1(2));
+prob = coco_set(prob, 'cont', 'branch', 'switch');
 [data, uidx] = coco_get_func_data(prob, 'po.orb.coll', 'data', 'uidx');
 prob = coco_add_func(prob, 'amplitude', ...
   @(p,d,u) deal(d, max(u(1:2:end))-min(u(1:2:end))), ...
@@ -112,8 +112,8 @@ legend(ax4,[t2snprofs;t2saprofs],txt{:},ltx{:});
 %% run 3 branch off from symmetry-adding bifurcation at lambda=14.5 into symmetry (1=2)+2
 BP2=cell2mat(run2{ty(run2,'BP')&run2{:,'lambda'}<15,'LAB'});
 prob = coco_prob;
-prob = ode_BP2po(prob, '', 'run2', BP2(1));
-prob = coco_set(prob, 'cont', 'branch', true);
+prob = ode_po2po(prob, '', 'run2', BP2(1));
+prob = coco_set(prob, 'cont', 'branch', 'switch');
 [data, uidx] = coco_get_func_data(prob, 'po.orb.coll', 'data', 'uidx');
 prob = coco_add_func(prob, 'amplitude', ...
   @(p,d,u) deal(d, max(u(1:2:end))-min(u(1:2:end))), ...
@@ -133,8 +133,8 @@ plot(ax5,run3.lambda(specsel),run3.amplitude(specsel),'ks','DisplayName','FP/BP/
 %% run 4, branch off from symmetry-breaking bifurcation near lambda=19.6UST = coco_bd_labs('run3', 'UST');
 UST3 = cell2mat(run3{ty(run3,'UST')&run3{:,'lambda'}>19&run3{:,'lambda'}<20,'LAB'});%coco_bd_labs('run3', 'UST');
 prob = coco_prob;
-prob = ode_BP2po(prob, '', 'run3', UST3);
-prob = coco_set(prob, 'cont', 'branch', true);
+prob = ode_po2po(prob, '', 'run3', UST3);
+prob = coco_set(prob, 'cont', 'branch', 'switch');
 [data, uidx] = coco_get_func_data(prob, 'po.orb.coll', 'data', 'uidx');
 prob = coco_add_func(prob, 'amplitude', ...
   @(p,d,u) deal(d, max(u(1:2:end))-min(u(1:2:end))), ...
@@ -176,25 +176,3 @@ r3sm=po_read_solution('run3',run3{find(run3.amplitude<1e-2&ty(run3,'FP')),'LAB'}
 figure(7);clf;axsm3=gca;hold(axsm3,'on');
 tsm3profs=plot(axsm3,r3sm.tbp,r3sm.xbp(:,1:2:end),lw{:});
 
-%% Track symmetry breaking
-UST = coco_bd_labs('run1', 'UST1');
-prob = coco_prob;
-prob = coco_set(prob, 'coll', 'MXCL', 'off');
-prob = coco_set(prob, 'po', 'SN', 'off', 'PD', 'off', 'TR', 'off');
-prob = ode_SN2SN(prob, '', 'run1', UST(2));
-pmat=cycle2perm([n_osc,basedim],{[1,2,4,3],4});
-prob = po_add_func(prob, '', 'symmetry', @symmetry, @d_symmetry, ...
-  struct('i', 1:2, 'tau', 1/4, 'gamma', ...
-  inv(pmat)),{'sym1' 'sym2'}, 'inactive');
-prob = coco_set_parival(prob, {'sym1' 'sym2'}, zeros(2,1));
-[data, uidx] = coco_get_func_data(prob, 'po.orb.coll', 'data', 'uidx');
-prob = coco_add_func(prob, 'amplitude', ...
-  @(p,d,u) deal(d, max(u(1:2:end))-min(u(1:2:end))), ...
-  struct('cid', 'po.orb.coll'), 'singular', ...
-  'amplitude', 'uidx', uidx(data.coll_seg.maps.xbp_idx), ...
-  'remesh', @ampremesh);
-%prob = po_construct_sbtest(prob, 'po', 5);
-%prob = coco_add_event(prob, 'UST', 'po.test.USTAB', (0:5-1)'+0.5);
-prob = coco_set(prob, 'cont', 'PtMX', [20 20], 'NPR', 0, 'NAdapt', 1, 'norm', inf, 'h_min', 1e-5);
-disp('RunSB: track symmetry breaking in 2 parameters')
-coco(prob, 'runSB', [], 1, {'lambda' 'B' 'po.period' 'amplitude'}, [1 30]);

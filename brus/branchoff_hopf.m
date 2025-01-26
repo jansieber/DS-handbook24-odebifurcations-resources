@@ -1,9 +1,9 @@
-%function branchoff_hopf(figs)
+function branchoff_hopf(figs)
 %% test branching off from Hopf bifurcation
 
-%if nargin<1
+if nargin<1
   figs = true;
-%end
+end
 
 %% define r.h.s.
 
@@ -41,7 +41,7 @@ prob = ode_isol2ep(prob, '', funcs, x0, pnames, p0);
 
 prob = coco_add_func(prob, 'ustab', @ep_USTAB, [], ...
   'discrete', 'ep.USTAB', 'passChart', 'requires', 'ep.test');
-%prob = coco_add_event(prob, 'UST', 'ep.USTAB', 0);
+prob = coco_add_event(prob, 'UST', 'ep.USTAB');
 
 prob = coco_set(prob, 'cont', 'NPR', inf, 'BP', 'off');
 coco(prob, 'run_eq', [], 1, 'lambda', [1 30]);
@@ -56,7 +56,7 @@ prob = coco_prob;
 prob = osc_equivHB2po(prob, '', 'run_eq', 2, {[1,2,4,3],4});
 prob = coco_add_func(prob, 'ustab', @po_USTAB, [], 'discrete', ...
   'po.USTAB', 'passChart', 'requires', {'po.orb.coll.test' 'po.test'});
-%prob = coco_add_event(prob, 'UST', 'po.USTAB', 0);
+prob = coco_add_event(prob, 'UST', 'po.USTAB');
 
 prob = coco_set(prob, 'cont', 'PtMX', [100 0], 'NPR', inf,...
   'NAdapt', 1, 'norm', inf);
@@ -68,7 +68,7 @@ prob = coco_prob;
 prob = osc_equivHB2po(prob, '', 'run_eq', 2, {[2,1],2; [3,4],1});
 prob = coco_add_func(prob, 'ustab', @po_USTAB, [], 'discrete', ...
   'po.USTAB', 'passChart', 'requires', {'po.orb.coll.test' 'po.test'});
-%prob = coco_add_event(prob, 'UST', 'po.USTAB', 0);
+prob = coco_add_event(prob, 'UST', 'po.USTAB');
 
 prob = coco_set(prob, 'cont', 'PtMX', [100 0], 'NPR', inf, ...
   'NAdapt', 1, 'norm', inf);
@@ -80,7 +80,7 @@ prob = coco_prob;
 prob = osc_equivHB2po(prob, '', 'run_eq', 2, {1,1; [2,3,4],1});
 prob = coco_add_func(prob, 'ustab', @po_USTAB, [], 'discrete', ...
   'po.USTAB', 'passChart', 'requires', {'po.orb.coll.test' 'po.test'});
-%prob = coco_add_event(prob, 'UST', 'po.USTAB', 0);
+prob = coco_add_event(prob, 'UST', 'po.USTAB');
 
 prob = coco_set(prob, 'cont', 'PtMX', [90 0], 'NPR', inf, ...
   'NAdapt', 1, 'norm', inf);
@@ -163,7 +163,7 @@ if figs
 
 end
 
-%end
+end
 
 %% utilities
 
