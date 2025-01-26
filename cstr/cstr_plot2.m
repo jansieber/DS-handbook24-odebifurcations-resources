@@ -21,6 +21,9 @@ grid(ax2,'on');
 set(ax2,'FontSize',18,'FontName','courier','FontWeight','bold','LineWidth',1);
 xlabel(ax2,'point number along branch');
 %%
-exportgraphics(figure(2),'../figures/po_discretization.pdf',...
-    'BackgroundColor','none','ContentType','vector')
+doplot=false;
+if doplot
+    exportgraphics(figure(2),'../figures/po_discretization.pdf',...
+        'BackgroundColor','none','ContentType','vector')
+end
 

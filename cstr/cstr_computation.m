@@ -229,7 +229,7 @@ coco(prob, 'po_long_run', [], 1, {'sigma' 'delta' 'amplitude' 'det' 'tr' 'xeq' '
 %%
 
 %%
-figure(5)
+figure(5);clf;
 hold on
 thm.ustab = '';
 thm.zlab = '\delta';
@@ -245,13 +245,4 @@ hold on
 coco_plot_bd(thm,'po_long_run', 'sigma', 'delta', 'MAX(x)')
 coco_plot_bd('sn_run', 'sigma', 'delta', 'MAX(x)')
 coco_plot_bd('hb_run1', 'sigma', 'delta', 'MAX(x)')
-hold off
-%%
-figure(1)
-clf
-hold on
- thm =  struct('lspec', {{{'b.', 'MarkerSize', 12},{'b-.', 'LineWidth', 3}}},'ustab','');
-coco_plot_bd(thm,'po_long_run', 'sigma', 'delta')
-coco_plot_bd('sn_run', 'sigma', 'delta')
-coco_plot_bd('hb_run1', 'sigma', 'delta')
 hold off
